@@ -1,4 +1,5 @@
 ﻿using System.Security.Cryptography;
+using System.Text;
 
 namespace RSA.Server.API;
 
@@ -24,10 +25,12 @@ public class RsaUtility
 
     public string Encrypt(string data, string publicKey)
     {
+        var publicKeyBytes = Convert.FromBase64String(publicKey);
+        
         using var rsa = System.Security.Cryptography.RSA.Create();
-        rsa.ImportRSAPublicKey(Convert.FromBase64String(publicKey), out _);
+        rsa.ImportSubjectPublicKeyInfo(publicKeyBytes, out _);
 
-        var encryptedBytes = rsa.Encrypt(System.Text.Encoding.UTF8.GetBytes(data), RSAEncryptionPadding.Pkcs1);
+        var encryptedBytes = rsa.Encrypt(Encoding.UTF8.GetBytes(data), RSAEncryptionPadding.Pkcs1);
         return Convert.ToBase64String(encryptedBytes);
     }
 }
