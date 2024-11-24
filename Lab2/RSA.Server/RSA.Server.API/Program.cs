@@ -30,11 +30,13 @@ app.UseCors();
 app.UseHttpsRedirection();
 
 app.MapPost("/key/send", (
-    string clientPublicKey, 
+    SendKeyRequest request, 
     HttpContext context,
     ClientKeyStore clientKeyStore) =>
 {
-    if (string.IsNullOrEmpty(clientPublicKey))
+    var key = request.Key;
+    
+    if (string.IsNullOrEmpty(key))
     {
         return Results.BadRequest("Invalid public key");
     }
@@ -45,7 +47,7 @@ app.MapPost("/key/send", (
         return Results.BadRequest("Unable to determine client IP");
     }
 
-    clientKeyStore.AddOrUpdate(clientIp, clientPublicKey);
+    clientKeyStore.AddOrUpdate(clientIp, key);
 
     return Results.Ok("Client public key received");
 });
@@ -57,9 +59,12 @@ app.MapGet("/files", () =>
     var directory = Path.Combine(Directory.GetCurrentDirectory(), "Files");
     var files = Directory.GetFiles(directory).Select(Path.GetFileName);
     return Results.Ok(files);
-}).AddEndpointFilter<RsaFilter>();
+});
 
-app.MapGet("/download/{fileName}", async (string fileName) =>
+app.MapGet("/download/{fileName}", async (
+    string fileName,
+    HttpContext context,
+    ClientKeyStore clientKeyStore) =>
 {
     var directory = Path.Combine(Directory.GetCurrentDirectory(), "Files");
 
@@ -70,18 +75,37 @@ app.MapGet("/download/{fileName}", async (string fileName) =>
         return Results.NotFound("File not found.");
     }
 
-    var memory = new MemoryStream();
-    await using (var stream = new FileStream(filePath, FileMode.Open, FileAccess.Read))
-    {
-        await stream.CopyToAsync(memory);
-    }
+    var fileBytes = await File.ReadAllBytesAsync(filePath);
+    var rsaKey = GetClientRsaKey(context, clientKeyStore);
 
-    memory.Position = 0;
+    if (String.IsNullOrEmpty(rsaKey))
+    {
+        return Results.BadRequest("Client public key not found.");
+    }
+        
+    var encryptedData = HybridEncryptionUtility.Encrypt(fileBytes, rsaKey);
 
     const string contentType = "application/octet-stream";
-    var fileDownloadName = Path.GetFileName(filePath);
+    var fileDownloadName = $"{Path.GetFileName(filePath)}.secure";
 
-    return Results.File(memory, contentType, fileDownloadName);
-}).AddEndpointFilter<RsaFilter>();
+    return Results.File(encryptedData, contentType, fileDownloadName);
+});
+
+string? GetClientRsaKey(HttpContext context, ClientKeyStore clientKeyStore)
+{
+    var clientIp = context.Connection.RemoteIpAddress?.ToString();
+    if (string.IsNullOrWhiteSpace(clientIp))
+    {
+        return null;
+    }
+            
+    var clientPublicKey = clientKeyStore.GetPublicKey(clientIp);
+    if (string.IsNullOrWhiteSpace(clientPublicKey))
+    {
+        return null;
+    }
+    
+    return clientPublicKey;
+}
 
 app.Run();

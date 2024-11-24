@@ -1,6 +1,23 @@
-@RSA.Server.API_HostAddress = http://localhost:5202
+@apiHostAddress = http://localhost:5202
+@clientPublicKey = MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAuqc17k0sHARRMU9czeSQVXtCh9W6ebGzHh4vpEUT3d7jNmBbH8dFDxYXaV+oBYKJfaxedhS4f54ItjtglloFI6PLK2MrJ0ZPB8f+586K2w2YH5HBOmzgwhABwwUgjEaZvBieqVoY0ygpRLJj8a6n2RBcCK7N6Aq1rP50W5WIg0KaZhUMkqQ1qPaQDNSirgEp7xGpz/8U0oBbeZl8Raabn9eLKrOrw9wAe3/i1z7Bx6LZOjXq1ZKYn1uGPA/NwbGnWI/pI/0+/pBGjXL2TEjpOVKccJe/OgPiruhcCSseHnAvN2/UEkY8DBFtN/AP7dB80KD1hbi63DzhhAMgPhMT4QIDAQAB
+@fileName = temp.txt
 
-GET {{RSA.Server.API_HostAddress}}/weatherforecast/
+GET {{apiHostAddress}}/key/get
 Accept: application/json
 
 ###
+POST {{apiHostAddress}}/key/send?clientPublicKey={{clientPublicKey}}
+Accept: application/json
+Content-Type: application/json
+
+{
+"key": "{{clientPublicKey}}"
+}
+
+###
+GET {{apiHostAddress}}/files
+Accept: application/json
+
+###
+GET {{apiHostAddress}}/download/{{fileName}}
+Accept: application/octet-stream

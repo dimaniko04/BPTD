@@ -8,7 +8,7 @@ public class ClientKeyStore
 
     public void AddOrUpdate(string clientIp, string publicKey)
     {
-        ClientKeys.AddOrUpdate(clientIp, publicKey, (key, oldValue) => publicKey);
+        ClientKeys.AddOrUpdate(clientIp, publicKey, (_, _) => publicKey);
     }
     
     public string? GetPublicKey(string clientIp)

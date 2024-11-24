@@ -20,7 +20,7 @@ public class RsaUtility
     public string Decrypt(string encryptedData)
     {
         var decryptedBytes = Rsa.Decrypt(Convert.FromBase64String(encryptedData), RSAEncryptionPadding.Pkcs1);
-        return System.Text.Encoding.UTF8.GetString(decryptedBytes);
+        return Encoding.UTF8.GetString(decryptedBytes);
     }
 
     public string Encrypt(string data, string publicKey)
