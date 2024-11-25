@@ -27,7 +27,7 @@ public class RsaUtility
     {
         var publicKeyBytes = Convert.FromBase64String(publicKey);
         
-        using var rsa = System.Security.Cryptography.RSA.Create();
+        using var rsa = System.Security.Cryptography.RSA.Create(2048);
         rsa.ImportSubjectPublicKeyInfo(publicKeyBytes, out _);
 
         var encryptedBytes = rsa.Encrypt(Encoding.UTF8.GetBytes(data), RSAEncryptionPadding.Pkcs1);

@@ -1,3 +1,3 @@
-namespace RSA.Server.API;
+namespace RSA.Server.API.Requests;
 
 public record SendKeyRequest(string Key);

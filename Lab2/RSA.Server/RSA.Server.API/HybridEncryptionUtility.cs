@@ -4,26 +4,17 @@ namespace RSA.Server.API;
 
 public static class HybridEncryptionUtility
 {
-    public static byte[] Encrypt(byte[] data, string rsaPublicKey)
+    public static (
+        byte[] ecnryptedData,
+        byte[] aesKey,
+        byte[] iv) Encrypt(byte[] data, string rsaPublicKey)
     {
-        using var aes = Aes.Create();
-        aes.GenerateKey();
-        aes.GenerateIV();
-
         var (encryptedData, key, iv) = EncryptWithAes(data);
 
-        var encryptedAesKey = EncryptAesKeyWithRsa(key, iv, rsaPublicKey);
+        var (encryptedAesKey, 
+                encryptedIv) = EncryptAesKeyWithRsa(key, iv, rsaPublicKey);
         
-        var combinedDataAndKey = 
-            new byte[encryptedData.Length + encryptedAesKey.Length];
-        Buffer.BlockCopy(encryptedData, 0, 
-            combinedDataAndKey, 0, 
-            encryptedData.Length);
-        Buffer.BlockCopy(encryptedAesKey, 0, 
-            combinedDataAndKey, encryptedData.Length, 
-            encryptedAesKey.Length);
-        
-        return combinedDataAndKey;
+        return (encryptedData, encryptedAesKey, encryptedIv);
     }
 
     private static (
@@ -45,19 +36,18 @@ public static class HybridEncryptionUtility
         return (memoryStream.ToArray(), aes.Key, aes.IV);
     }
     
-    private static byte[] EncryptAesKeyWithRsa(
+    private static (byte[], byte[]) EncryptAesKeyWithRsa(
         byte[] key, byte[] iv, string rsaPublicKey)
     {
         var publicKeyBytes = Convert.FromBase64String(rsaPublicKey);
         
-        var combinedKeyAndIv = new byte[key.Length + iv.Length];
-        Buffer.BlockCopy(key, 0, combinedKeyAndIv, 0, key.Length);
-        Buffer.BlockCopy(iv, 0, combinedKeyAndIv, key.Length, iv.Length);
-        
-        using var rsa = System.Security.Cryptography.RSA.Create();
+        using var rsa = System.Security.Cryptography.RSA.Create(2048);
 
         rsa.ImportSubjectPublicKeyInfo(publicKeyBytes, out _);
 
-        return rsa.Encrypt(combinedKeyAndIv, RSAEncryptionPadding.Pkcs1);
+        var encryptedKey = rsa.Encrypt(key, RSAEncryptionPadding.Pkcs1);
+        var encryptedIv = rsa.Encrypt(iv, RSAEncryptionPadding.Pkcs1);
+        
+        return (encryptedKey, encryptedIv);
     }
 }
