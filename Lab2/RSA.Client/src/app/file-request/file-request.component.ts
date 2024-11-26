@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { JSEncrypt } from 'jsencrypt';
 import { EncryptedFileResponse, FileService } from '../services/file.service';
 import { ToastrService } from 'ngx-toastr';
 import { mergeMap } from 'rxjs';
+import { CryptoService } from '../services/crypto.service';
 
 @Component({
   selector: 'app-file-request',
@@ -11,27 +11,20 @@ import { mergeMap } from 'rxjs';
 })
 export class FileRequestComponent implements OnInit {
   fileName: string = '';
-  private clientPublicKey: string = '';
-  private clientPrivateKey: string = '';
   public serverPublicKey: string = '';
 
   constructor(
     private readonly fileService: FileService,
+    private readonly cryptoService: CryptoService,
     private readonly toastr: ToastrService
   ) {}
 
-  ngOnInit(): void {
-    this.generateClientKeys();
+  async ngOnInit() {
+    await this.cryptoService.generateKeyPair();
     this.fetchServerPublicKey();
-    this.registerClientPublicKey();
+    await this.registerClientPublicKey();
 
     this.decryptFile = this.decryptFile.bind(this);
-  }
-
-  private generateClientKeys() {
-    const rsa = new JSEncrypt({ default_key_size: '2048' });
-    this.clientPrivateKey = rsa.getPrivateKeyB64();
-    this.clientPublicKey = rsa.getPublicKeyB64();
   }
 
   private fetchServerPublicKey() {
@@ -50,8 +43,10 @@ export class FileRequestComponent implements OnInit {
     });
   }
 
-  private registerClientPublicKey() {
-    this.fileService.sendPublicKey(this.clientPublicKey).subscribe({
+  private async registerClientPublicKey() {
+    const clientPublicKey = await this.cryptoService.exportRsaPublicKey();
+
+    this.fileService.sendPublicKey(clientPublicKey).subscribe({
       next: () => {
         this.toastr.success(
           'Публічний ключ клієнта успішно зареєстровано.',
@@ -68,17 +63,20 @@ export class FileRequestComponent implements OnInit {
     });
   }
 
-  requestFile() {
+  async requestFile() {
     if (!this.fileName) {
       this.toastr.warning('Будь ласка, введіть назву файлу.', 'Попередження');
       return;
     }
+    let encryptedFileName;
 
-    const encryptor = new JSEncrypt();
-    encryptor.setPublicKey(this.serverPublicKey);
-    const encryptedFileName = encryptor.encrypt(this.fileName);
-
-    if (!encryptedFileName) {
+    try {
+      encryptedFileName = await this.cryptoService.encryptWithRsa(
+        this.fileName,
+        this.serverPublicKey
+      );
+    } catch (err) {
+      console.error('Помилка шифрування імені файлу:', err);
       this.toastr.error('Помилка шифрування імені файлу.', 'Помилка');
       return;
     }
@@ -102,62 +100,22 @@ export class FileRequestComponent implements OnInit {
   }
 
   private async decryptFile(response: EncryptedFileResponse) {
-    const [key, iv] = this.decryptAesKeyAndIv(response.aesKey, response.iv);
+    const key = await this.cryptoService.decryptWithRsaPrivateKey(
+      response.aesKey
+    );
+    const iv = await this.cryptoService.decryptWithRsaPrivateKey(response.iv);
 
     if (!key || !iv) {
       return null;
     }
+    await this.cryptoService.importAesKey(key);
 
-    const textEncoder = new TextEncoder();
-    const decryptedContent = await this.decryptAesContent(
-      this.base64ToArrayBuffer(response.encryptedContent),
-      textEncoder.encode(key),
-      textEncoder.encode(iv)
+    const decryptedContent = await this.cryptoService.decryptWithAes(
+      iv,
+      response.encryptedContent
     );
 
     return decryptedContent;
-  }
-
-  private decryptAesKeyAndIv(encryptedKey: string, encryptedIv: string) {
-    const decryptor = new JSEncrypt();
-    decryptor.setPrivateKey(this.clientPrivateKey);
-
-    const key = decryptor.decrypt(encryptedKey);
-    const iv = decryptor.decrypt(encryptedIv);
-
-    return [key, iv];
-  }
-
-  private base64ToArrayBuffer(base64: string) {
-    const binaryString = atob(base64);
-    const bytes = new Uint8Array(binaryString.length);
-    for (let i = 0; i < binaryString.length; i++) {
-      bytes[i] = binaryString.charCodeAt(i);
-    }
-    return bytes;
-  }
-
-  private async decryptAesContent(
-    encryptedContent: Uint8Array,
-    aesKey: Uint8Array,
-    iv: Uint8Array
-  ): Promise<ArrayBuffer> {
-    const key = await crypto.subtle.importKey(
-      'raw',
-      aesKey,
-      { name: 'AES-CBC' },
-      false,
-      ['decrypt']
-    );
-
-    return crypto.subtle.decrypt(
-      {
-        name: 'AES-CBC',
-        iv,
-      },
-      key,
-      encryptedContent
-    );
   }
 
   private downloadFile(fileData: ArrayBuffer) {

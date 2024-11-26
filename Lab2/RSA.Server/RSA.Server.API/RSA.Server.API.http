@@ -18,12 +18,3 @@ Content-Type: application/json
 ###
 GET {{apiHostAddress}}/files
 Accept: application/json
-
-###
-POST {{apiHostAddress}}/download/{{fileName}}
-Accept: application/octet-stream
-Content-Type: application/json
-
-{
-"key": "{{clientPrivateKey}}"
-}

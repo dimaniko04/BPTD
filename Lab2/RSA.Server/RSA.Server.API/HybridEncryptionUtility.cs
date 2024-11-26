@@ -45,8 +45,8 @@ public static class HybridEncryptionUtility
 
         rsa.ImportSubjectPublicKeyInfo(publicKeyBytes, out _);
 
-        var encryptedKey = rsa.Encrypt(key, RSAEncryptionPadding.Pkcs1);
-        var encryptedIv = rsa.Encrypt(iv, RSAEncryptionPadding.Pkcs1);
+        var encryptedKey = rsa.Encrypt(key, RSAEncryptionPadding.OaepSHA256);
+        var encryptedIv = rsa.Encrypt(iv, RSAEncryptionPadding.OaepSHA256);
         
         return (encryptedKey, encryptedIv);
     }

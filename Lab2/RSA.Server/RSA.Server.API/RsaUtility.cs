@@ -14,12 +14,14 @@ public class RsaUtility
 
     public string GetPublicKey()
     {
-        return Convert.ToBase64String(Rsa.ExportRSAPublicKey());
+        return Convert.ToBase64String(Rsa.ExportSubjectPublicKeyInfo());
     }
 
     public string Decrypt(string encryptedData)
     {
-        var decryptedBytes = Rsa.Decrypt(Convert.FromBase64String(encryptedData), RSAEncryptionPadding.Pkcs1);
+        var decryptedBytes = Rsa.Decrypt(
+            Convert.FromBase64String(encryptedData), 
+            RSAEncryptionPadding.OaepSHA256);
         return Encoding.UTF8.GetString(decryptedBytes);
     }
 
@@ -30,7 +32,9 @@ public class RsaUtility
         using var rsa = System.Security.Cryptography.RSA.Create(2048);
         rsa.ImportSubjectPublicKeyInfo(publicKeyBytes, out _);
 
-        var encryptedBytes = rsa.Encrypt(Encoding.UTF8.GetBytes(data), RSAEncryptionPadding.Pkcs1);
+        var encryptedBytes = rsa.Encrypt(
+            Encoding.UTF8.GetBytes(data), 
+            RSAEncryptionPadding.OaepSHA256);
         return Convert.ToBase64String(encryptedBytes);
     }
 }
