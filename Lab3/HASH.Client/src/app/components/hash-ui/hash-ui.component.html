@@ -1,0 +1,79 @@
+<div class="hash-container">
+    <div class="hash-section">
+      <div class="hash-card">
+        <h2>Text Hashing</h2>
+        <input
+          type="text"
+          class="hash-input"
+          [(ngModel)]="textInput"
+          placeholder="Enter text to hash"
+        />
+        <select class="hash-select" [(ngModel)]="bitSize">
+          <option value="2">2-bit</option>
+          <option value="4">4-bit</option>
+          <option value="8">8-bit</option>
+        </select>
+        <button class="hash-button" (click)="hashText()">Hash Text</button>
+        <p *ngIf="textHashResult" class="status-message success">
+          Text Hash: {{ textHashResult }}
+        </p>
+  
+        <h3>Verify Text Digest</h3>
+        <input
+          type="text"
+          class="hash-input"
+          [(ngModel)]="textDigest"
+          placeholder="Enter digest to verify"
+        />
+        <button class="hash-button" (click)="verifyText()">Verify Text</button>
+        <p *ngIf="textVerificationResult" class="status-message success">
+          Verification: {{ textVerificationResult }}
+        </p>
+      </div>
+  
+      <div class="hash-card">
+        <h2>File Hashing</h2>
+        <div
+          class="file-drop"
+          (dragover)="onDragOver($event)"
+          (drop)="onFileDropped($event)"
+          (click)="triggerFileInputClick()"
+        >
+          <p *ngIf="!selectedFile">Drag & Drop a file here or click to select</p>
+          <p *ngIf="selectedFile">File selected: {{ selectedFile.name }}</p>
+          <input
+            type="file"
+            class="file-input"
+            (change)="onFileSelected($event)"
+          />
+        </div>
+        <select class="hash-select" [(ngModel)]="bitSize">
+          <option value="2">2-bit</option>
+          <option value="4">4-bit</option>
+          <option value="8">8-bit</option>
+        </select>
+        <button class="hash-button" (click)="hashFile()">Hash File</button>
+        <p *ngIf="fileHashResult" class="status-message success">
+          File Hash: {{ fileHashResult }}
+        </p>
+  
+        <h3>Verify File Digest</h3>
+        <input
+          type="text"
+          class="hash-input"
+          [(ngModel)]="fileDigest"
+          placeholder="Enter digest to verify"
+        />
+        <button class="hash-button" (click)="verifyFile()">Verify File</button>
+        <p *ngIf="fileVerificationResult" class="status-message success">
+          Verification: {{ fileVerificationResult }}
+        </p>
+      </div>
+  
+      <div class="hash-card">
+        <h2>Generate Collision</h2>
+        <button class="hash-button" (click)="generateCollision()">Generate Collision</button>
+      </div>
+    </div>
+  </div>
+  

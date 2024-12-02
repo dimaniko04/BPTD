@@ -1,0 +1,103 @@
+.hash-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    background: #f8f9fa;
+    font-family: Arial, sans-serif;
+    margin: 0;
+  }
+  
+  .hash-section {
+    background: #fff;
+    padding: 20px 30px;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    text-align: center;
+    width: 400px;
+  }
+  
+  .hash-section h1 {
+    margin-bottom: 20px;
+    font-size: 1.8rem;
+    color: #333;
+  }
+  
+  .hash-card {
+    margin-bottom: 30px;
+  }
+  
+  .hash-card h2 {
+    margin-bottom: 15px;
+    font-size: 1.4rem;
+    color: #007bff;
+  }
+  
+  .hash-input,
+  .hash-select {
+    width: 100%;
+    padding: 10px 15px;
+    font-size: 1rem;
+    margin-bottom: 15px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    box-sizing: border-box;
+    outline: none;
+    transition: border 0.3s;
+  }
+  
+  .hash-input:focus,
+  .hash-select:focus {
+    border-color: #007bff;
+  }
+  
+  .hash-button {
+    width: 100%;
+    padding: 10px 15px;
+    font-size: 1rem;
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+  }
+  
+  .hash-button:hover {
+    background-color: #0056b3;
+  }
+  
+  .file-input {
+    display: none;
+  }
+  
+  .file-drop {
+    border: 2px dashed #007bff;
+    border-radius: 10px;
+    padding: 20px;
+    cursor: pointer;
+    margin-bottom: 15px;
+    background-color: #f1f9ff;
+    transition: background-color 0.3s;
+  }
+  
+  .file-drop:hover {
+    background-color: #e1f3ff;
+  }
+  
+  .file-drop p {
+    color: #007bff;
+    margin: 0;
+    font-size: 1rem;
+  }  
+  
+  .status-message {
+    font-size: 14px;
+    color: #999;
+    margin-top: 10px;
+  }
+  
+  .status-message.success {
+    color: #28a745;
+  }
+  
