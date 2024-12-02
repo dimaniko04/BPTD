@@ -1,0 +1,21 @@
+@apiHostAddress = http://localhost:5269
+
+POST {{apiHostAddress}}/hash/text
+Accept: application/json
+Content-Type: application/json
+
+{
+  "text": "Hello World!", 
+  "bitSize": 8
+}
+
+###
+POST {{apiHostAddress}}/verify/text
+Accept: application/json
+Content-Type: application/json
+
+{
+  "text": "Hello World!",
+  "digest": "10011101",
+  "bitSize": 8
+}
