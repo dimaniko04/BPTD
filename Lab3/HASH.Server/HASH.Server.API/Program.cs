@@ -150,5 +150,82 @@ app.MapPost("/collision/file", async (
     }
 }).DisableAntiforgery();
 
+byte[] ToBytes(string binaryStr)
+{
+    int n = binaryStr.Length / 8;
+    byte[] bytes = new byte[n];
+    
+    for(int i = 0; i < n; i++)
+    {
+        bytes[i] = Convert.ToByte(binaryStr.Substring(i * 8, 8), 2);
+    }
+
+    return bytes;
+}
+
+app.MapPost("/signature/create", (
+    CreateDigitalSignatureRequest request) =>
+{
+    var digestStr = request.Digest;
+    
+    if (string.IsNullOrEmpty(digestStr))
+    {
+        return Results.BadRequest("Digest is required");
+    }
+    
+    try
+    {
+        var digest = ToBytes(digestStr);
+        var (ds, publicKey) = DigitalSignatureUtil.SignDigest(digest);
+            
+        return Results.Ok(new
+        {
+            DigitalSignature = ds,
+            PublicKey = publicKey
+        });
+    }
+    catch (Exception ex)
+    {
+        return Results.BadRequest(ex.Message);
+    }
+});
+
+app.MapPost("/signature/verify", (
+    VerifyDigitalSignatureRequest request) =>
+{
+    var digestStr = request.Digest;
+    var signature = request.Signature;
+    var publicKey = request.PublicKey;
+    
+    if (string.IsNullOrEmpty(digestStr))
+    {
+        return Results.BadRequest("Digest is required");
+    }
+    if (string.IsNullOrEmpty(signature))
+    {
+        return Results.BadRequest("Signature is required");
+    }
+    if (string.IsNullOrEmpty(publicKey))
+    {
+        return Results.BadRequest("Key is required");
+    }
+    
+    try
+    {
+        var digest = ToBytes(digestStr);
+        var valid = DigitalSignatureUtil
+            .VerifySignature(
+                signature,
+                publicKey,
+                digest);
+            
+        return Results.Ok(valid);
+    }
+    catch (Exception ex)
+    {
+        return Results.BadRequest(ex.Message);
+    }
+});
+    
 app.Run();
 
