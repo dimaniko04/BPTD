@@ -1,0 +1,28 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FundRaising.Server.API", "FundRaising.Server.API\FundRaising.Server.API.csproj", "{7ECC3686-C646-4232-98FA-CDEB4DDF5074}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FundRaising.Server.Core", "FundRaising.Server.Core\FundRaising.Server.Core.csproj", "{F8ED9EF5-293F-4B42-A194-E13100724327}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FundRaising.Server.DAL", "FundRaising.Server.DAL\FundRaising.Server.DAL.csproj", "{999335BD-4088-4F3E-A7F6-BC31F7D427DA}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{7ECC3686-C646-4232-98FA-CDEB4DDF5074}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7ECC3686-C646-4232-98FA-CDEB4DDF5074}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7ECC3686-C646-4232-98FA-CDEB4DDF5074}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7ECC3686-C646-4232-98FA-CDEB4DDF5074}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F8ED9EF5-293F-4B42-A194-E13100724327}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F8ED9EF5-293F-4B42-A194-E13100724327}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F8ED9EF5-293F-4B42-A194-E13100724327}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F8ED9EF5-293F-4B42-A194-E13100724327}.Release|Any CPU.Build.0 = Release|Any CPU
+		{999335BD-4088-4F3E-A7F6-BC31F7D427DA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{999335BD-4088-4F3E-A7F6-BC31F7D427DA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{999335BD-4088-4F3E-A7F6-BC31F7D427DA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{999335BD-4088-4F3E-A7F6-BC31F7D427DA}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+EndGlobal
