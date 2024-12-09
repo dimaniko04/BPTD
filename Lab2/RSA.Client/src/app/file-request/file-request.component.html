@@ -1,0 +1,16 @@
+<div class="file-request-container">
+  <div class="file-request">
+    <h2>Запит на файл</h2>
+
+    <p *ngIf="!serverPublicKey" class="status-message">
+      Отримання публічного ключа сервера...
+    </p>
+    <p *ngIf="serverPublicKey" class="status-message success">
+      Публічний ключ сервера отримано.
+    </p>
+
+    <input [(ngModel)]="fileName" placeholder="Введіть назву файлу" />
+    
+    <button (click)="requestFile()" [disabled]="!serverPublicKey">Отримати файл</button>
+  </div>
+</div>

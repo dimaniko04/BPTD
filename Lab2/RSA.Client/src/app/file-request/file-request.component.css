@@ -1,0 +1,72 @@
+.file-request-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-family: Arial, sans-serif;
+    margin: 0;
+  }
+  
+  .file-request {
+    background: #fff;
+    padding: 20px 30px;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    text-align: center;
+    width: 300px;
+  }
+  
+  .file-request h2 {
+    margin-bottom: 20px;
+    font-size: 1.5rem;
+    color: #333;
+  }
+  
+  .file-request input {
+    width: 100%;
+    padding: 10px 15px;
+    font-size: 1rem;
+    margin-bottom: 15px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    box-sizing: border-box;
+    outline: none;
+    transition: border 0.3s;
+  }
+  
+  .file-request input:focus {
+    border-color: #007bff;
+  }
+  
+  .file-request button {
+    width: 100%;
+    padding: 10px 15px;
+    font-size: 1rem;
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+  }
+  
+  .file-request button:hover {
+    background-color: #0056b3;
+  }
+  
+  @media (max-width: 400px) {
+    .file-request {
+      width: 90%;
+      padding: 15px;
+    }
+  }
+  
+.status-message {
+  font-size: 14px;
+  color: #999;
+  margin-bottom: 10px;
+}
+
+.status-message.success {
+  color: #28a745;
+}
+  
