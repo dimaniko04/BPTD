@@ -6,6 +6,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FundRaising.Server.Core", "
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FundRaising.Server.DAL", "FundRaising.Server.DAL\FundRaising.Server.DAL.csproj", "{999335BD-4088-4F3E-A7F6-BC31F7D427DA}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FundRaising.Server.BLL", "FundRaising.Server.BLL\FundRaising.Server.BLL.csproj", "{DDD41A18-CECA-484E-B731-8F33FB108F84}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -24,5 +26,9 @@ Global
 		{999335BD-4088-4F3E-A7F6-BC31F7D427DA}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{999335BD-4088-4F3E-A7F6-BC31F7D427DA}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{999335BD-4088-4F3E-A7F6-BC31F7D427DA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{DDD41A18-CECA-484E-B731-8F33FB108F84}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DDD41A18-CECA-484E-B731-8F33FB108F84}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DDD41A18-CECA-484E-B731-8F33FB108F84}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DDD41A18-CECA-484E-B731-8F33FB108F84}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal

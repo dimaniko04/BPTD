@@ -16,6 +16,7 @@
     </ItemGroup>
 
     <ItemGroup>
+      <ProjectReference Include="..\FundRaising.Server.BLL\FundRaising.Server.BLL.csproj" />
       <ProjectReference Include="..\FundRaising.Server.DAL\FundRaising.Server.DAL.csproj" />
     </ItemGroup>
 

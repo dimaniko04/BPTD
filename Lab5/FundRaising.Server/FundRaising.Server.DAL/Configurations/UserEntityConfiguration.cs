@@ -36,14 +36,8 @@ public class UserEntityConfiguration
 
         builder.Property(p => p.PasswordHash)
             .IsRequired()
-            .HasMaxLength(128)
-            .HasColumnType("varchar(128)")
+            .HasMaxLength(512)
+            .HasColumnType("varchar(512)")
             .HasColumnName("password_hash");
-        
-        builder.Property(p => p.Salt)
-            .IsRequired()
-            .HasMaxLength(128)
-            .HasColumnType("varchar(128)")
-            .HasColumnName("salt");
     }
 }

@@ -2,7 +2,6 @@ namespace FundRaising.Server.Core.Entities;
 
 public class User: BaseEntity
 {
-    public string Salt { get; set; } = null!;
     public string Email { get; set; } = null!;
     public string PasswordHash { get; set; } = null!;
     
