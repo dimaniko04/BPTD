@@ -1,4 +1,6 @@
 @HostAddress = http://localhost:5200
+@Token = Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJlZDBmMTNkNy03M2VjLTRhY2QtOTVlZi0xZDk5NGFiY2VjMmEiLCJlbWFpbCI6ImRpbWFAZ21haWwuY29tIiwiZXhwIjoxNzM0MTEzOTg1LCJpc3MiOiJGdW5kUmFpc2luZyIsImF1ZCI6IkZ1bmRSYWlzaW5nIn0.31gtXvk4fqLG9MJ1kfRGVoRxkQTxbncA04EYq3qKMCI
+@Id = bd69b553-dc67-4509-9cbc-dcf54ce1dac6
 
 POST {{HostAddress}}/auth/register
 Accept: application/json
@@ -18,3 +20,41 @@ Content-Type: application/json
   "email": "dima@gmail.com",
   "password": "qwerty123"
 }
+
+###
+GET {{HostAddress}}/fundraisers
+Content-Type: application/json
+Authorization: {{Token}}
+
+###
+GET {{HostAddress}}/fundraisers/{{Id}}
+Content-Type: application/json
+
+###
+POST {{HostAddress}}/fundraisers
+Content-Type: application/json
+Accept: application/json
+Authorization: {{Token}}
+
+{
+  "title": "Some title",
+  "description": "Some description",
+  "goal": 10000000
+}
+
+###
+PUT {{HostAddress}}/fundraisers/{{Id}}
+Content-Type: application/json
+Accept: application/json
+Authorization: {{Token}}
+
+{
+  "title": "Some title",
+  "description": "Some description",
+  "goal": 100000
+}
+
+###
+DELETE {{HostAddress}}/fundraisers/{{Id}}
+Content-Type: application/json
+Authorization: {{Token}}

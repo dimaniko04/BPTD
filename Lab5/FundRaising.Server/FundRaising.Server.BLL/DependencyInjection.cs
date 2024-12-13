@@ -1,5 +1,6 @@
 using System.Reflection;
 using FundRaising.Server.BLL.Services.Auth;
+using FundRaising.Server.BLL.Services.Fundraisers;
 using Mapster;
 using MapsterMapper;
 using Microsoft.Extensions.DependencyInjection;
@@ -20,6 +21,7 @@ public static class DependencyInjection
         this IServiceCollection services)
     {
         services.AddScoped<IAuthService, AuthService>();
+        services.AddScoped<IFundraisersService, FundraisersService>();
     }
 
     private static void ConfigureMapping(
