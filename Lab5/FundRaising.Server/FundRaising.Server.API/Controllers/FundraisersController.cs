@@ -52,7 +52,7 @@ public class FundraisersController: ControllerBase
     [HttpPut("{id}")]
     public async Task<IActionResult> Update(
         Guid id,
-        [FromBody] CreateFundraiserDto fundraiserDto)
+        [FromBody] UpdateFundraiserDto fundraiserDto)
     {
         var userId = GetUserId();
         await _fundraisersService.UpdateFundraiser(
@@ -66,6 +66,18 @@ public class FundraisersController: ControllerBase
     {
         var userId = GetUserId();
         await _fundraisersService.DeleteFundraiser(userId, id);
+        
+        return NoContent();
+    }
+
+    [HttpPost("{id}/donate")]
+    public async Task<IActionResult> Donate(
+        Guid id, 
+        [FromBody] PaymentDto paymentDto)
+    {
+        var userId = GetUserId();
+        
+        await _fundraisersService.Donate(userId, id, paymentDto);
         
         return NoContent();
     }

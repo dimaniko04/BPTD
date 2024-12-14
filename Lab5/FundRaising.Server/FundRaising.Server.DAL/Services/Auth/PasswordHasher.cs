@@ -1,7 +1,7 @@
 using System.Security.Cryptography;
 using FundRaising.Server.BLL.Interfaces.Services;
 
-namespace FundRaising.Server.DAL.Services;
+namespace FundRaising.Server.DAL.Services.Auth;
 
 public class PasswordHasher: IPasswordHasher
 {

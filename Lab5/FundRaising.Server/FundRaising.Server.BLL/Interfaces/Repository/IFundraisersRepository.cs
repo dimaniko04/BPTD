@@ -7,4 +7,5 @@ public interface IFundraisersRepository
 {
     Task<List<Fundraiser>> GetAllUserFundraisers(Guid userId);
     Task<bool> IsUserFundraiser(Guid userId, Guid id);
+    Task AddDonation(Donation donation);
 }
