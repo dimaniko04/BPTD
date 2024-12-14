@@ -44,9 +44,10 @@ public class FundraisersController: ControllerBase
         [FromBody] CreateFundraiserDto fundraiserDto)
     {
         var userId = GetUserId();
-        await _fundraisersService.AddFundraiser(userId, fundraiserDto);
+        var fundraiser = await _fundraisersService
+            .AddFundraiser(userId, fundraiserDto);
 
-        return Created();
+        return Ok(fundraiser);
     }
 
     [HttpPut("{id}")]
@@ -55,10 +56,10 @@ public class FundraisersController: ControllerBase
         [FromBody] UpdateFundraiserDto fundraiserDto)
     {
         var userId = GetUserId();
-        await _fundraisersService.UpdateFundraiser(
+        var fundraiser = await _fundraisersService.UpdateFundraiser(
             userId, id, fundraiserDto);
 
-        return NoContent();
+        return Ok(fundraiser);
     }
 
     [HttpDelete("{id}")]
@@ -77,9 +78,10 @@ public class FundraisersController: ControllerBase
     {
         var userId = GetUserId();
         
-        await _fundraisersService.Donate(userId, id, paymentDto);
+        var fundraiser = await _fundraisersService
+             .Donate(userId, id, paymentDto);
         
-        return NoContent();
+        return Ok(fundraiser);
     }
     
     private Guid GetUserId()

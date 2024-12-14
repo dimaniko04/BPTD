@@ -1,5 +1,5 @@
 @HostAddress = http://localhost:5200
-@Token = Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJlZDBmMTNkNy03M2VjLTRhY2QtOTVlZi0xZDk5NGFiY2VjMmEiLCJlbWFpbCI6ImRpbWFAZ21haWwuY29tIiwiZXhwIjoxNzM0MTM2NjA4LCJpc3MiOiJGdW5kUmFpc2luZyIsImF1ZCI6IkZ1bmRSYWlzaW5nIn0.uIAZY8-Z_X4NzdWHvex05zrjB370saKSncEhGGzjK5Y
+@Token = Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJlZDBmMTNkNy03M2VjLTRhY2QtOTVlZi0xZDk5NGFiY2VjMmEiLCJlbWFpbCI6ImRpbWFAZ21haWwuY29tIiwiZXhwIjoxNzM0MTk2NDQ0LCJpc3MiOiJGdW5kUmFpc2luZyIsImF1ZCI6IkZ1bmRSYWlzaW5nIn0.s9TIJTu94d4sWDFxcUXm9FKFI597YuG2ne4JClqQpoM
 @Id = daaf0331-cfa9-4347-8a21-845b24e471a3
 @Card = 4000000000003055
 @CardInvalid = 4000000000000002
@@ -41,9 +41,9 @@ Accept: application/json
 Authorization: {{Token}}
 
 {
-  "title": "Some title",
-  "description": "Some description",
-  "goal": "10000000"
+  "title": "New fundraiser",
+  "description": "Fundraiser description",
+  "goal": "1000"
 }
 
 ###
@@ -53,7 +53,7 @@ Accept: application/json
 Authorization: {{Token}}
 
 {
-  "title": "Some title",
+  "title": "Old fundraiser",
   "description": "Some description",
   "goal": "1000"
 }
@@ -66,7 +66,7 @@ Authorization: {{Token}}
 
 {
   "description": "some description",
-  "amount": "1",
+  "amount": "100",
   "card": "{{Card}}",
   "cardExpiryDate": "{{CardExpiryDate}}",
   "cardCvv": "{{CardCvv}}"
