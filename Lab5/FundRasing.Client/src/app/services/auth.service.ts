@@ -1,14 +1,14 @@
-import { Router } from "@angular/router";
-import { RegisterDto } from "../models/Auth/RegisterDto";
-import { Observable } from "rxjs";
-import { AuthResponseDto } from "../models/Auth/AuthResponseDto";
-import { LoginDto } from "../models/Auth/LoginDto";
 import { Injectable } from "@angular/core";
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from "@angular/common/http";
+import { Router } from "@angular/router";
+import { Observable } from "rxjs";
+import { LoginDto } from "../models/Auth/LoginDto";
+import { RegisterDto } from "../models/Auth/RegisterDto";
+import { AuthResponseDto } from "../models/Auth/AuthResponseDto";
 
-@Injectable({ providedIn: 'root' })
+@Injectable({ providedIn: "root" })
 export class AuthService {
-  private apiUrl = 'http://localhost:5000/auth';
+  private apiUrl = "http://localhost:5200/auth";
 
   constructor(private http: HttpClient, private router: Router) {}
 
@@ -21,15 +21,27 @@ export class AuthService {
   }
 
   saveToken(token: string): void {
-    localStorage.setItem('authToken', token);
+    localStorage.setItem("authToken", token);
   }
 
   getToken(): string | null {
-    return localStorage.getItem('authToken');
+    return localStorage.getItem("authToken");
   }
 
   logout(): void {
-    localStorage.removeItem('authToken');
-    this.router.navigate(['/login']);
+    localStorage.removeItem("authToken");
+    this.router.navigate(["/login"]);
+  }
+
+  isLoggedIn(): boolean {
+    const token = this.getToken();
+    return !!token;
+  }
+
+  getAuthHeaders(): HttpHeaders {
+    const token = this.getToken();
+    return new HttpHeaders({
+      Authorization: `Bearer ${token}`,
+    });
   }
 }

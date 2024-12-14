@@ -1,32 +1,49 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { FundraiserDto } from '../models/Fundraiser/FundraiserDto';
 import { CreateFundraiserDto } from '../models/Fundraiser/CreateFundraiserDto';
+import { UpdateFundraiserDto } from '../models/Fundraiser/UpdateFundraiserDto';
+import { PaymentDto } from '../models/Fundraiser/PaymentDto';
+import { AuthService } from './auth.service';
 
 @Injectable({ providedIn: 'root' })
 export class FundraiserService {
-  private apiUrl = 'http://localhost:5000/fundraisers';
+  private apiUrl = 'http://localhost:5200/fundraisers';
 
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient, private authService: AuthService) {}
+
+  private getHeaders(): HttpHeaders {
+    return this.authService.getAuthHeaders();
+  }
 
   getAll(): Observable<FundraiserDto[]> {
-    return this.http.get<FundraiserDto[]>(this.apiUrl);
+    const headers = this.getHeaders();
+    return this.http.get<FundraiserDto[]>(this.apiUrl, { headers });
   }
 
   getById(id: string): Observable<FundraiserDto> {
-    return this.http.get<FundraiserDto>(`${this.apiUrl}/${id}`);
+    const headers = this.getHeaders();
+    return this.http.get<FundraiserDto>(`${this.apiUrl}/${id}`, { headers });
   }
 
   create(fundraiser: CreateFundraiserDto): Observable<void> {
-    return this.http.post<void>(this.apiUrl, fundraiser);
+    const headers = this.getHeaders();
+    return this.http.post<void>(this.apiUrl, fundraiser, { headers });
   }
 
-  update(id: string, fundraiser: CreateFundraiserDto): Observable<void> {
-    return this.http.put<void>(`${this.apiUrl}/${id}`, fundraiser);
+  update(id: string, fundraiser: UpdateFundraiserDto): Observable<void> {
+    const headers = this.getHeaders();
+    return this.http.put<void>(`${this.apiUrl}/${id}`, fundraiser, { headers });
   }
 
   delete(id: string): Observable<void> {
-    return this.http.delete<void>(`${this.apiUrl}/${id}`);
+    const headers = this.getHeaders();
+    return this.http.delete<void>(`${this.apiUrl}/${id}`, { headers });
+  }
+
+  donate(id: string, payment: PaymentDto): Observable<void> {
+    const headers = this.getHeaders();
+    return this.http.post<void>(`${this.apiUrl}/${id}/donate`, payment, { headers });
   }
 }
