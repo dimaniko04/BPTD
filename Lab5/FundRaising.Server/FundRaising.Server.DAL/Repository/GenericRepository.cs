@@ -7,7 +7,7 @@ namespace FundRaising.Server.DAL.Repository;
 public class GenericRepository<T>: IGenericRepository<T> 
     where T : BaseEntity
 {
-    private readonly AppDbContext _context;
+    protected readonly AppDbContext _context;
     protected readonly DbSet<T> DbSet;
 
     protected GenericRepository(AppDbContext context)

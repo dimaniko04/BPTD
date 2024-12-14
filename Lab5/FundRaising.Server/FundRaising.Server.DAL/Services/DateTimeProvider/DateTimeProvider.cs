@@ -1,6 +1,6 @@
 using FundRaising.Server.BLL.Interfaces.Services;
 
-namespace FundRaising.Server.DAL.Services;
+namespace FundRaising.Server.DAL.Services.DateTimeProvider;
 
 public class DateTimeProvider: IDateTimeProvider
 {

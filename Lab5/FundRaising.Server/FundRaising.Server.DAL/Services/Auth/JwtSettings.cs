@@ -1,4 +1,4 @@
-namespace FundRaising.Server.DAL.Services;
+namespace FundRaising.Server.DAL.Services.Auth;
 
 public class JwtSettings
 {

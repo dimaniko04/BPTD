@@ -12,6 +12,7 @@ public interface IFundraisersService
     Task UpdateFundraiser(
         Guid userId,
         Guid id,
-        CreateFundraiserDto fundraiser);
+        UpdateFundraiserDto fundraiser);
     Task DeleteFundraiser(Guid userId, Guid id);
+    Task Donate(Guid userId, Guid id, PaymentDto paymentDto);
 }

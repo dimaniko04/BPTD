@@ -6,7 +6,7 @@ using FundRaising.Server.Core.Entities;
 using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
 
-namespace FundRaising.Server.DAL.Services;
+namespace FundRaising.Server.DAL.Services.Auth;
 
 public class JwtTokenGenerator: IJwtTokenGenerator
 {

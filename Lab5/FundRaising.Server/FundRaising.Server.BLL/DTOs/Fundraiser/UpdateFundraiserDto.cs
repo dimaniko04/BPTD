@@ -1,6 +1,6 @@
 namespace FundRaising.Server.BLL.DTOs.Fundraiser;
 
-public record CreateFundraiserDto(
+public record UpdateFundraiserDto(
     string Title,
     string Description,
     string Goal);

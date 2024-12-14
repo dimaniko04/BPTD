@@ -11,10 +11,21 @@ public class MappingConfig: IRegister
     {
         config.NewConfig<User, UserDto>();
         
-        config.NewConfig<Fundraiser, FundraiserDto>();
-        config.NewConfig<(Guid id, CreateFundraiserDto dto), Fundraiser>()
-            .Map(dest => dest.UserId, src => src.id)
+        config.NewConfig<Fundraiser, FundraiserDto>()
+            .Map(dest => dest.AmountRaised, src => src.AmountRaised / 100.0)
+            .Map(dest => dest.Goal, src => src.Goal / 100.0);
+        
+        config.NewConfig<(Guid userId, CreateFundraiserDto dto), Fundraiser>()
+            .Map(dest => dest.UserId, src => src.userId)
             .Map(dest => dest, src => src.dto)
-            .Map(dest => dest.Id, _ => Guid.NewGuid());
+            .Map(dest => dest.Id, _ => Guid.NewGuid())
+            .Map(dest => dest.Goal, 
+                src => (long)Math.Truncate(
+                    double.Parse(src.dto.Goal) * 100.0));
+        
+        config.NewConfig<UpdateFundraiserDto, Fundraiser>()
+            .Map(dest => dest.Goal, 
+                src => (long)Math.Truncate(
+                    double.Parse(src.Goal) * 100.0));
     }
 }

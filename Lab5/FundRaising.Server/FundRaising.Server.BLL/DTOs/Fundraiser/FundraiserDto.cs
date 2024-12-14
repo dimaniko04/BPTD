@@ -4,5 +4,5 @@ public record FundraiserDto(
     Guid Id,
     string Title,
     string Description,
-    long Goal,
-    long AmountRaised);
+    double Goal,
+    double AmountRaised);

@@ -3,6 +3,9 @@ using FundRaising.Server.BLL.Interfaces.Repository;
 using FundRaising.Server.BLL.Interfaces.Services;
 using FundRaising.Server.DAL.Repository;
 using FundRaising.Server.DAL.Services;
+using FundRaising.Server.DAL.Services.Auth;
+using FundRaising.Server.DAL.Services.DateTimeProvider;
+using FundRaising.Server.DAL.Services.LiqPay;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
@@ -20,7 +23,7 @@ public static class DependencyInjection
     {
         services.ConfigureDbContext(configuration);
         services.ConfigureAuth(configuration);
-        services.ConfigureServices();
+        services.ConfigureServices(configuration);
         services.ConfigureRepositories();
     }
 
@@ -64,10 +67,16 @@ public static class DependencyInjection
         });
     }
 
-    private static void ConfigureServices(this IServiceCollection services)
+    private static void ConfigureServices(
+        this IServiceCollection services,
+        IConfiguration configuration)
     {
+        services.Configure<LiqPaySettings>(
+            configuration.GetSection(LiqPaySettings.SectionName));
+        
         services.AddSingleton<IDateTimeProvider, DateTimeProvider>();
         services.AddSingleton<IPasswordHasher, PasswordHasher>();
+        services.AddSingleton<ILiqPay, LiqPay>();
     }
 
     private static void ConfigureRepositories(

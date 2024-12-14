@@ -24,4 +24,9 @@ public class FundraiserRepository
         return await DbSet.AnyAsync(f => 
             f.Id == fundraiserId && f.UserId == userId);
     }
+
+    public async Task AddDonation(Donation donation)
+    {
+        await _context.Donations.AddAsync(donation);
+    }
 }
