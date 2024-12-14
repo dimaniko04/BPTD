@@ -9,6 +9,10 @@ import { HttpClientModule } from '@angular/common/http';
 import { LoginComponent } from './components/login/login.component';
 import { RegisterComponent } from './components/register/register.component';
 import { FundraiserCardComponent } from './components/fundraiser-card/fundraiser-card.component';
+import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
+import { MatDialogModule } from '@angular/material/dialog';
+import { MatButtonModule } from '@angular/material/button';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 @NgModule({
   declarations: [
@@ -24,9 +28,13 @@ import { FundraiserCardComponent } from './components/fundraiser-card/fundraiser
     FormsModule,
     HttpClientModule,
     ReactiveFormsModule,
-    //MatDialogModule
+    MatButtonModule,
+    MatDialogModule,
+    BrowserAnimationsModule,
   ],
-  providers: [],
+  providers: [
+    provideAnimationsAsync()
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
