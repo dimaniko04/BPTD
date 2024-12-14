@@ -1,0 +1,8 @@
+<div class="fundraiser-card">
+    <h3>{{ fundraiser.title }}</h3>
+    <p>{{ fundraiser.description }}</p>
+    <p><strong>Goal:</strong> {{ fundraiser.goal | currency }}</p>
+    <p><strong>Raised:</strong> {{ fundraiser.amountRaised | currency }}</p>
+    <button class="fundraiser-button">Donate</button>
+  </div>
+  

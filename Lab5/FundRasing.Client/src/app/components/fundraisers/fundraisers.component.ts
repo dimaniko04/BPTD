@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { FundraiserDto } from 'src/app/models/Fundraiser/FundraiserDto';
 import { FundraiserService } from 'src/app/services/fundraiser.service';
+import { FundraiserDto } from 'src/app/models/Fundraiser/FundraiserDto';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-fundraisers',
@@ -8,7 +9,7 @@ import { FundraiserService } from 'src/app/services/fundraiser.service';
   styleUrls: ['./fundraisers.component.css']
 })
 export class FundraisersComponent implements OnInit {
-  fundraisers: FundraiserDto[] = [];
+  fundraisers$: Observable<FundraiserDto[]> | undefined;
 
   constructor(private fundraiserService: FundraiserService) {}
 
@@ -17,8 +18,6 @@ export class FundraisersComponent implements OnInit {
   }
 
   loadFundraisers(): void {
-    this.fundraiserService.getAll().subscribe(data => {
-      this.fundraisers = data;
-    });
+    this.fundraisers$ = this.fundraiserService.getAll();
   }
 }
