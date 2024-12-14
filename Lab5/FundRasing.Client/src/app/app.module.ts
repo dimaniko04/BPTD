@@ -23,7 +23,8 @@ import { FundraiserCardComponent } from './components/fundraiser-card/fundraiser
     AppRoutingModule,
     FormsModule,
     HttpClientModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    //MatDialogModule
   ],
   providers: [],
   bootstrap: [AppComponent]

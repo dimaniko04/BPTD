@@ -4,5 +4,8 @@
         <app-fundraiser-card [fundraiser]="fundraiser"></app-fundraiser-card>
       </div>
     </div>
+    <div class="no-fundraisers" *ngIf="(fundraisers$ | async)?.length === 0">
+      <p>No fundraisers available at the moment. Start a new one today!</p>
+    </div>
   </div>
   
