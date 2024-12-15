@@ -1,36 +1,44 @@
+.fundraisers-header {
+  display: flex;
+  justify-content: flex-end;
+  margin-bottom: 20px;
+}
+
+.create-fundraiser-btn {
+  background-color: #007bff;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 5px;
+  font-size: 16px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.create-fundraiser-btn:hover {
+  background-color: #0056b3;
+}
+
 .fundraisers-container {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-    padding: 20px;
-    background-color: #f8f9fa;
-    font-family: Arial, sans-serif;
-  }
-  
-  .row {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-    gap: 16px;
-  }
-  
-  .col {
-    flex: 0 0 calc(33.333% - 16px);
-    box-sizing: border-box;
-  
-    @media (max-width: 768px) {
-      flex: 0 0 calc(50% - 16px);
-    }
-  
-    @media (max-width: 480px) {
-      flex: 0 0 100%;
-    }
-  }
-  
-  .no-fundraisers {
-    text-align: center;
-    font-size: 1rem;
-    color: #555;
-    margin-top: 20px;
-  }
-  
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+}
+
+.col {
+  flex: 1 1 calc(33.333% - 20px);
+  box-sizing: border-box;
+}
+
+.no-fundraisers {
+  text-align: center;
+  margin-top: 20px;
+  font-size: 18px;
+  color: #666;
+}

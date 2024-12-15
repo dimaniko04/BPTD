@@ -1,0 +1,62 @@
+<form #createFundraiserForm="ngForm" (ngSubmit)="createFundraiser()" class="modal-form">
+    <div class="form-group">
+      <label for="title">Title</label>
+      <input
+        id="title"
+        name="title"
+        type="text"
+        [(ngModel)]="fundraiserModel.title"
+        class="auth-input"
+        placeholder="Enter fundraiser title"
+        required
+      />
+    </div>
+  
+    <div class="form-group">
+      <label for="description">Description</label>
+      <textarea
+        id="description"
+        name="description"
+        [(ngModel)]="fundraiserModel.description"
+        class="auth-input"
+        placeholder="Enter fundraiser description"
+        rows="4"
+        required
+      ></textarea>
+    </div>
+  
+    <div class="form-group">
+      <label for="goal">Goal Amount</label>
+      <input
+        id="goal"
+        name="goal"
+        type="number"
+        [(ngModel)]="fundraiserModel.goal"
+        class="auth-input"
+        placeholder="Enter goal amount"
+        min="1"
+        required
+      />
+    </div>
+  
+    <div class="modal-footer">
+      <button 
+        mat-raised-button 
+        color="primary" 
+        type="submit" 
+        [disabled]="!createFundraiserForm.valid"
+      >
+        Save
+      </button>
+      <button 
+        mat-raised-button 
+        color="warn" 
+        type="button" 
+        class="cancel-button" 
+        (click)="closeModal()"
+      >
+        Cancel
+      </button>
+    </div>
+  </form>
+  

@@ -1,11 +1,16 @@
+<div class="fundraisers-header">
+  <button class="create-fundraiser-btn" (click)="openCreateFundraiserForm()">
+    + Create Fundraiser
+  </button>
+</div>
+
 <div class="fundraisers-container">
-    <div class="row" *ngIf="fundraisers$ | async as fundraisers">
-      <div class="col" *ngFor="let fundraiser of fundraisers">
-        <app-fundraiser-card [fundraiser]="fundraiser"></app-fundraiser-card>
-      </div>
-    </div>
-    <div class="no-fundraisers" *ngIf="(fundraisers$ | async)?.length === 0">
-      <p>No fundraisers available at the moment. Start a new one today!</p>
+  <div class="row" *ngIf="fundraisers$ | async as fundraisers">
+    <div class="col" *ngFor="let fundraiser of fundraisers">
+      <app-fundraiser-card [fundraiser]="fundraiser"></app-fundraiser-card>
     </div>
   </div>
-  
+  <div class="no-fundraisers" *ngIf="(fundraisers$ | async)?.length === 0">
+    <p>No fundraisers available at the moment. Start a new one today!</p>
+  </div>
+</div>

@@ -27,9 +27,9 @@ export class FundraiserService {
     return this.http.get<FundraiserDto>(`${this.apiUrl}/${id}`, { headers });
   }
 
-  create(fundraiser: CreateFundraiserDto): Observable<void> {
+  create(fundraiser: CreateFundraiserDto): Observable<FundraiserDto> {
     const headers = this.getHeaders();
-    return this.http.post<void>(this.apiUrl, fundraiser, { headers });
+    return this.http.post<FundraiserDto>(this.apiUrl, fundraiser, { headers });
   }
 
   update(id: string, fundraiser: UpdateFundraiserDto): Observable<void> {

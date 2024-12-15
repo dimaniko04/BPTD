@@ -1,7 +1,10 @@
 import { Component, OnInit } from '@angular/core';
+import { MatDialog, MatDialogConfig, MatDialogRef } from '@angular/material/dialog';
 import { FundraiserService } from 'src/app/services/fundraiser.service';
 import { FundraiserDto } from 'src/app/models/Fundraiser/FundraiserDto';
-import { Observable } from 'rxjs';
+import { Observable, BehaviorSubject, combineLatest } from 'rxjs';
+import { map } from 'rxjs/operators';
+import { CreateFundraiserModalComponent } from '../create-fundraiser-modal/create-fundraiser-modal.component';
 
 @Component({
   selector: 'app-fundraisers',
@@ -9,15 +12,44 @@ import { Observable } from 'rxjs';
   styleUrls: ['./fundraisers.component.css']
 })
 export class FundraisersComponent implements OnInit {
-  fundraisers$: Observable<FundraiserDto[]> | undefined;
+  dialogConfig = new MatDialogConfig();
+  modalDialog: MatDialogRef<CreateFundraiserModalComponent, any> | undefined;
 
-  constructor(private fundraiserService: FundraiserService) {}
+  private newFundraiserSubject = new BehaviorSubject<FundraiserDto | null>(null);
+
+  fundraisers$?: Observable<FundraiserDto[]>;
+
+  constructor(
+    private fundraiserService: FundraiserService,
+    public matDialog: MatDialog
+  ) {}
 
   ngOnInit(): void {
     this.loadFundraisers();
   }
 
   loadFundraisers(): void {
-    this.fundraisers$ = this.fundraiserService.getAll();
+    this.fundraisers$ = combineLatest([
+      this.fundraiserService.getAll(),
+      this.newFundraiserSubject.asObservable()
+    ]).pipe(
+      map(([fundraisers, newFundraiser]) => {
+        if (newFundraiser) {
+          return [newFundraiser, ...fundraisers];
+        }
+        return fundraisers;
+      })
+    );
+  }
+
+  openCreateFundraiserForm(): void {
+    this.dialogConfig.id = 'fundraisers-modal-component';
+    this.modalDialog = this.matDialog.open(CreateFundraiserModalComponent, {
+      data: {}
+    });
+
+    this.modalDialog.componentInstance.fundraiserCreated.subscribe((newFundraiser: FundraiserDto) => {
+      this.newFundraiserSubject.next(newFundraiser);
+    });
   }
 }

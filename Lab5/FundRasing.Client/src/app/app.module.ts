@@ -13,6 +13,8 @@ import { provideAnimationsAsync } from '@angular/platform-browser/animations/asy
 import { MatDialogModule } from '@angular/material/dialog';
 import { MatButtonModule } from '@angular/material/button';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { ToastrModule } from 'ngx-toastr';
+import { CreateFundraiserModalComponent } from './components/create-fundraiser-modal/create-fundraiser-modal.component';
 
 @NgModule({
   declarations: [
@@ -20,7 +22,8 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
     FundraisersComponent,
     LoginComponent,
     RegisterComponent,
-    FundraiserCardComponent
+    FundraiserCardComponent,
+    CreateFundraiserModalComponent
   ],
   imports: [
     BrowserModule,
@@ -31,6 +34,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
     MatButtonModule,
     MatDialogModule,
     BrowserAnimationsModule,
+    ToastrModule.forRoot(),
   ],
   providers: [
     provideAnimationsAsync()

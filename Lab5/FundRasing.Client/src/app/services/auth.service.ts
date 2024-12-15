@@ -33,9 +33,21 @@ export class AuthService {
     this.router.navigate(["/login"]);
   }
 
+  isTokenExpired(token: string | null): boolean {
+    if (!token) return true;
+
+    const expiry = (JSON.parse(atob(token.split('.')[1]))).exp;
+    return (Math.floor((new Date).getTime() / 1000)) >= expiry;
+  }
+
   isLoggedIn(): boolean {
     const token = this.getToken();
-    return !!token;
+    if (token && !this.isTokenExpired(token)) {
+      return true;
+    }
+
+    this.logout();
+    return false;
   }
 
   getAuthHeaders(): HttpHeaders {
@@ -45,3 +57,4 @@ export class AuthService {
     });
   }
 }
+
