@@ -8,11 +8,16 @@ public interface IFundraisersService
     Task<IEnumerable<FundraiserDto>> 
         GetAllUserFundraisers(Guid userId);
     Task<FundraiserDto> GetFundraiser(Guid id);
-    Task AddFundraiser(Guid userId, CreateFundraiserDto fundraiser);
-    Task UpdateFundraiser(
+    Task<FundraiserDto> AddFundraiser(
+        Guid userId,
+        CreateFundraiserDto fundraiser);
+    Task<FundraiserDto> UpdateFundraiser(
         Guid userId,
         Guid id,
         UpdateFundraiserDto fundraiser);
     Task DeleteFundraiser(Guid userId, Guid id);
-    Task Donate(Guid userId, Guid id, PaymentDto paymentDto);
+    Task<FundraiserDto> Donate(
+        Guid userId,
+        Guid id,
+        PaymentDto paymentDto);
 }

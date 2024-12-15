@@ -50,7 +50,7 @@ public class FundraisersService: IFundraisersService
         return fundraiserDto;
     }
 
-    public async Task AddFundraiser(
+    public async Task<FundraiserDto> AddFundraiser(
         Guid userId,
         CreateFundraiserDto createFundraiserDto)
     {
@@ -64,9 +64,13 @@ public class FundraisersService: IFundraisersService
         
         await _fundraisersRepository.AddAsync(fundraiser);
         await _fundraisersRepository.SaveChangesAsync();
+
+        var fundraiserDto = _mapper.Map<FundraiserDto>(fundraiser);
+
+        return fundraiserDto;
     }
 
-    public async Task UpdateFundraiser(
+    public async Task<FundraiserDto> UpdateFundraiser(
         Guid userId,
         Guid fundraiserId,
         UpdateFundraiserDto createFundraiserDto)
@@ -90,6 +94,10 @@ public class FundraisersService: IFundraisersService
         _mapper.Map(createFundraiserDto, fundraiser);
         _fundraisersRepository.Update(fundraiser);
         await _fundraisersRepository.SaveChangesAsync();
+        
+        var fundraiserDto = _mapper.Map<FundraiserDto>(fundraiser);
+        
+        return fundraiserDto;
     }
 
     public async Task DeleteFundraiser(Guid userId, Guid id)
@@ -110,7 +118,7 @@ public class FundraisersService: IFundraisersService
         await _fundraisersRepository.SaveChangesAsync();
     }
 
-    public async Task Donate(
+    public async Task<FundraiserDto> Donate(
         Guid userId, Guid id, PaymentDto paymentDto)
     {
         if (!double.TryParse(paymentDto.Amount, out var amount))
@@ -151,5 +159,9 @@ public class FundraisersService: IFundraisersService
         _fundraisersRepository.Update(fundraiser);
         await _fundraisersRepository.AddDonation(donation);
         await _fundraisersRepository.SaveChangesAsync();
+        
+        var fundraiserDto = _mapper.Map<FundraiserDto>(fundraiser);
+        
+        return fundraiserDto;
     }
 }
