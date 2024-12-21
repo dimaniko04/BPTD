@@ -15,6 +15,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ToastrModule } from 'ngx-toastr';
 import { CreateFundraiserModalComponent } from './components/create-fundraiser-modal/create-fundraiser-modal.component';
+import { DonationModalComponent } from './components/donation-modal/donation-modal.component';
 
 @NgModule({
   declarations: [
@@ -23,7 +24,8 @@ import { CreateFundraiserModalComponent } from './components/create-fundraiser-m
     LoginComponent,
     RegisterComponent,
     FundraiserCardComponent,
-    CreateFundraiserModalComponent
+    CreateFundraiserModalComponent,
+    DonationModalComponent
   ],
   imports: [
     BrowserModule,

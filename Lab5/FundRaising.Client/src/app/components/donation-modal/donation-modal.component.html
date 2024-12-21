@@ -1,0 +1,80 @@
+<form #donationForm="ngForm" (ngSubmit)="donate(donationForm)" class="modal-form">
+    <h3 class="modal-title">Donate to "{{ data.fundraiserTitle }}"</h3>
+  
+    <div class="form-group">
+      <label for="amount">Amount ($)</label>
+      <input
+        id="amount"
+        name="amount"
+        type="number"
+        [(ngModel)]="paymentModel.amount"
+        class="auth-input"
+        placeholder="Enter amount"
+        required
+      />
+    </div>
+  
+    <div class="form-group">
+      <label for="card">Card Number</label>
+      <input
+        id="card"
+        name="card"
+        type="text"
+        [(ngModel)]="paymentModel.card"
+        class="auth-input"
+        placeholder="1234 5678 9012 3456"
+        pattern="\\d{16}"
+        required
+      />
+    </div>
+  
+    <div class="form-group" style="display: flex; gap: 16px;">
+      <div style="flex: 1;">
+        <label for="cardExpiryDate">Expiry Date (MM/YY)</label>
+        <input
+          id="cardExpiryDate"
+          name="cardExpiryDate"
+          type="text"
+          [(ngModel)]="paymentModel.cardExpiryDate"
+          class="auth-input"
+          placeholder="MM/YY"
+          pattern="\\d{2}/\\d{2}"
+          required
+        />
+      </div>
+      <div style="flex: 1;">
+        <label for="cardCvv">CVV</label>
+        <input
+          id="cardCvv"
+          name="cardCvv"
+          type="text"
+          [(ngModel)]="paymentModel.cardCvv"
+          class="auth-input"
+          placeholder="123"
+          pattern="\\d{3}"
+          required
+        />
+      </div>
+    </div>
+  
+    <div class="modal-footer">
+      <button
+        mat-raised-button
+        color="primary"
+        type="submit"
+        [disabled]="!donationForm.valid || isProcessing"
+      >
+        {{ isProcessing ? 'Processing...' : 'Donate' }}
+      </button>
+      <button
+        mat-raised-button
+        color="warn"
+        type="button"
+        class="cancel-button"
+        (click)="closeModal()"
+      >
+        Cancel
+      </button>
+    </div>
+  </form>
+  

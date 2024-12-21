@@ -44,12 +44,17 @@ export class FundraisersComponent implements OnInit {
 
   openCreateFundraiserForm(): void {
     this.dialogConfig.id = 'fundraisers-modal-component';
-    this.modalDialog = this.matDialog.open(CreateFundraiserModalComponent, {
-      data: {}
-    });
-
+    this.dialogConfig = {
+      width: '500px',
+      panelClass: 'fundraisers-modal',
+      data: {},
+    };
+  
+    this.modalDialog = this.matDialog.open(CreateFundraiserModalComponent, this.dialogConfig);
+  
     this.modalDialog.componentInstance.fundraiserCreated.subscribe((newFundraiser: FundraiserDto) => {
       this.newFundraiserSubject.next(newFundraiser);
     });
   }
+  
 }

@@ -1,8 +1,16 @@
 <div class="fundraiser-card">
-    <h3>{{ fundraiser.title }}</h3>
-    <p>{{ fundraiser.description }}</p>
-    <p><strong>Goal:</strong> {{ fundraiser.goal | currency }}</p>
-    <p><strong>Raised:</strong> {{ fundraiser.amountRaised | currency }}</p>
-    <button class="fundraiser-button">Donate</button>
+  <h3>{{ fundraiser.title }}</h3>
+  <p>{{ fundraiser.description }}</p>
+  <p><strong>Goal:</strong> {{ fundraiser.goal | currency }}</p>
+  <p><strong>Raised:</strong> {{ fundraiser.amountRaised | currency }}</p>
+
+  <div class="progress-bar-container">
+    <div
+      class="progress-bar-fill"
+      [style.width.%]="progressPercentage"
+    ></div>
   </div>
-  
+  <p><strong>{{ progressPercentage.toFixed(1) }}%</strong> of the goal raised</p>
+
+  <button class="fundraiser-button" (click)="openDonationModal()">Donate</button>
+</div>

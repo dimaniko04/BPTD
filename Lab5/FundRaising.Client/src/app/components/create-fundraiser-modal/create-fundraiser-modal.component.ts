@@ -35,7 +35,12 @@ export class CreateFundraiserModalComponent implements OnInit, AfterViewInit {
 
   createFundraiser() {
     if (this.createForm?.valid) {
-      this.fundraiserService.create(this.fundraiserModel).subscribe(
+      const fundraiserToSend = {
+        ...this.fundraiserModel,
+        goal: this.fundraiserModel.goal.toString(),
+      };
+  
+      this.fundraiserService.create(fundraiserToSend).subscribe(
         (newFundraiser: FundraiserDto) => {
           this.fundraiserCreated.emit(newFundraiser);
           this.closeModal();
@@ -44,6 +49,7 @@ export class CreateFundraiserModalComponent implements OnInit, AfterViewInit {
       );
     }
   }
+  
 
   closeModal() {
     this.dialogRef.close();

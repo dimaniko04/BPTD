@@ -42,8 +42,7 @@ export class FundraiserService {
     return this.http.delete<void>(`${this.apiUrl}/${id}`, { headers });
   }
 
-  donate(id: string, payment: PaymentDto): Observable<void> {
-    const headers = this.getHeaders();
-    return this.http.post<void>(`${this.apiUrl}/${id}/donate`, payment, { headers });
-  }
+  donate(fundraiserId: string, payment: PaymentDto): Observable<FundraiserDto> {
+    return this.http.post<FundraiserDto>(`/api/fundraisers/${fundraiserId}/donate`, payment);
+  }  
 }
